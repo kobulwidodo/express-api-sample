@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const productRouter = require('./routes/productRouter')
 
 const app = express()
 
@@ -15,8 +16,9 @@ app.get('/', (req, res) => {
   res.json({ message: 'hello from api' })
 })
 
-const PORT = process.env.PORT || 8080
+app.use('/api/product', productRouter)
 
+const PORT = process.env.PORT || 8080
 app.listen(PORT, () => {
   console.log(`server is running at port ${PORT}`)
 })
