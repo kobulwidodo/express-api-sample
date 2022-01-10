@@ -1,8 +1,7 @@
 const dbConfig = require('../config/db')
+const { Sequelize, DataTypes } = require('sequelize')
 
-const { Sequileze, DataTypes } = require('sequelize')
-
-const sequelize = new Sequileze(dbConfig.DATABASE, dbConfig.USER, dbConfig.PASSWORD, {
+const sequelize = new Sequelize(dbConfig.DATABASE, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
   operatorsAliases: false,
@@ -25,7 +24,7 @@ sequelize.authenticate()
 
 const db = {}
 
-db.Sequileze = Sequileze
+db.Sequelize = Sequelize
 db.sequelize = sequelize
 db.products = require('./productModel.js')(sequelize, DataTypes)
 db.reviews = require('./reviewModel.js')(sequelize, DataTypes)
