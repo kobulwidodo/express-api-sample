@@ -17,12 +17,7 @@ const createProduct = async (req, res) => {
 
 // Get All Products
 const getAllProducts = async (req, res) => {
-  let products = await Product.findAll({
-    attributes: [
-      'title',
-      'price'
-    ]
-  })
+  let products = await Product.findAll({})
   res.status(200).send(products)
 }
 
@@ -35,7 +30,7 @@ const getProductsById = async (req, res) => {
 
 // Get Published Product
 const getPublishedProduct = async (req, res) => {
-  let product = await Product.findAll({ where: { published: true } })
+  let product = await Product.findAll({ where: { published: true }})
   res.status(200).send(product)
 }
 
