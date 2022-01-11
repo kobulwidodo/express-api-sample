@@ -1,14 +1,18 @@
+const dotenv = require('dotenv')
+
+dotenv.config()
+
 module.exports = {
-  HOST: 'localhost',
-  USER: 'root',
-  PASSWORD: '',
-  DATABASE: 'express-adib',
-  dialect: 'mysql',
+  HOST: process.env.HOST,
+  USER: process.env.USER,
+  PASSWORD: process.env.PASSWORD,
+  DATABASE: process.env.DATABASE,
+  dialect: process.env.DIALECT,
 
   pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
+    max: process.env.MAX,
+    min: process.env.MIN,
+    acquire: process.env.ACQUIRE,
+    idle: process.env.IDLE
   }
 }
