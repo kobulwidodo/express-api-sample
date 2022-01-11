@@ -1,4 +1,4 @@
-# express-api-sample
+# simple-express-api
 Simple CRUD App with Node JS
 ## Framework
 - Api : Express JS
