@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const productRouter = require('./routes/productRouter')
+const authRouter = require('./routes/authRouter')
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/product', productRouter)
+app.use('/api/auth', authRouter)
 
 const PORT = process.env.PORT || 8080
 app.listen(PORT, () => {
