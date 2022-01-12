@@ -27,11 +27,14 @@ const db = {}
 db.Sequelize = Sequelize
 db.sequelize = sequelize
 db.products = require('./productModel.js')(sequelize, DataTypes)
-db.user = require('./userModel.js')(sequelize, DataTypes)
+db.users = require('./userModel.js')(sequelize, DataTypes)
 
 db.sequelize.sync({ force: false })
 .then(() => {
   console.log(`re-sync done`);
 })
+
+db.users.hasMany(db.products)
+db.products.belongsTo(db.users)
 
 module.exports = db
