@@ -4,7 +4,7 @@ const apiResponse = require('../helpers/apiResponse')
 const bcrypt = require('bcryptjs')
 const JWT = require('jsonwebtoken')
 
-const User = db.user
+const User = db.users
 
 // Register User
 const registerUser = async (req, res) => {
