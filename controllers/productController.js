@@ -11,7 +11,8 @@ const createProduct = async (req, res) => {
       title: req.body.title,
       price: req.body.price,
       description: req.body.description,
-      published: req.body.published ? req.body.published : false
+      published: req.body.published ? req.body.published : false,
+      userId: req.user.user_id
     }
 
     const validate = await productSchema.createProduct.validateAsync(body)
@@ -59,8 +60,10 @@ const updateProductById = async (req, res) => {
   try {
     let id = req.params.id
     const validate = await productSchema.updateProduct.validateAsync(req.body)
-    let product = await Product.update(validate, { where: {id: id} })
-    res.status(200).send(apiResponse('success', 200, 'Berhasil merubah produk', product))
+    const product = await Product.findOne({ where: { id: id } })
+    if (product.userId !== req.user.user_id) throw new Error('Access Denied')
+    await Product.update(validate, { where: {id: id} })
+    res.status(200).send(apiResponse('success', 200, 'Berhasil merubah produk'))
   } catch (err) {
     res.status(433).send(apiResponse('error', 433, err.message))
   }
@@ -70,7 +73,8 @@ const updateProductById = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     let id = req.params.id
-    
+    const product = await Product.findOne({ where: { id: id } })
+    if (product.userId !== req.user.user_id) throw new Error('Access Denied')
     await Product.destroy({ where:{ id: id } })
     res.status(200).send(apiResponse('success', 200, 'Berhasil menghapus produk'))
   } catch (err) {
