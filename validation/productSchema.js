@@ -7,7 +7,9 @@ const createProduct = Joi.object({
     .required(),
   description: Joi.string()
     .required(),
-  published: Joi.boolean()
+  published: Joi.boolean(),
+  userId: Joi.number()
+    .required()
 })
 
 const updateProduct = Joi.object({
