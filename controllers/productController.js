@@ -1,5 +1,6 @@
 const apiResponse = require('../helpers/apiResponse')
 const db = require('../models')
+const productSchema = require('../validation/productSchema')
 
 const Product = db.products
 
@@ -13,7 +14,9 @@ const createProduct = async (req, res) => {
       published: req.body.published ? req.body.published : false
     }
 
-    const product = await Product.create(body)
+    const validate = await productSchema.createProduct.validateAsync(body)
+
+    const product = await Product.create(validate)
     res.status(200).send(apiResponse('success', 200, 'Produk Berhasil dibuat', product))
   } catch (err) {
     res.status(422).send(apiResponse('error', 422, err.message))
@@ -55,13 +58,8 @@ const getPublishedProduct = async (req, res) => {
 const updateProductById = async (req, res) => {
   try {
     let id = req.params.id
-    let body = {
-      title: req.body.title,
-      price: req.body.price,
-      description: req.body.description,
-      published: req.body.published ? req.body.published : false
-    }
-    let product = await Product.update(body, { where: {id: id} })
+    const validate = await productSchema.updateProduct.validateAsync(req.body)
+    let product = await Product.update(validate, { where: {id: id} })
     res.status(200).send(apiResponse('success', 200, 'Berhasil merubah produk', product))
   } catch (err) {
     res.status(433).send(apiResponse('error', 433, err.message))
